@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  One entry per real page. This site is a single page today, so the sections
+  are listed as anchors for completeness, but only the root URL matters for
+  indexing. Add a new <url> block here for each new page (e.g. a blog post
+  or a city/service landing page) as the site grows.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://byother-construction.onrender.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
