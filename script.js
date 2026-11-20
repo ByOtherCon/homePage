@@ -7,7 +7,7 @@ const BUSINESS = {
   name: "Byother Construction",
   phone: "(407) 434-1825",
   email: "info@byother.net",
-  jobsEmail: "job@byother.net",         // where job applicants write to
+  jobsEmail: "jobs@byother.net",         // where job applicants write to
   address: "184 East Liberty Street, Hernando, FL 34442",
   area: "Central Florida — including Orlando, Tampa, Jacksonville and the surrounding area",
   license: "GC License # CBC1265846 — fully insured",
