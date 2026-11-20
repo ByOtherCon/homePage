@@ -498,8 +498,12 @@ function finishFlow() {
   addMsg("Here's what I've got:\n" + lines.join("\n"), "bot");
   const subject = "Job application: " + position + (a.name ? " — " + a.name : "");
   const href = "mailto:" + BUSINESS.jobsEmail + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(lines.join("\n"));
-  addMsg("Looks good? Send it our way and we'll be in touch.", "bot", { text: "Send application to " + BUSINESS.jobsEmail, href });
+  addMsg(
+    "Ready to submit your application? Or if you'd rather, you can always email us directly at " + BUSINESS.jobsEmail + ".",
+    "bot"
+  );
   renderChips([
+    { label: "Submit application", onClick: () => { window.location.href = href; } },
     { label: "Start a new application", onClick: () => startApplyFlow() },
     { label: "Done, thanks", onClick: () => renderDefaultChips() },
   ]);
