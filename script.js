@@ -519,3 +519,61 @@ chatForm.addEventListener("submit", (e) => {
   if (flow.active) flowReceiveText(text);
   else ask(text);
 });
+
+// --- Lightbox: click a project photo to view full size, browse with arrows --
+(function () {
+  const lightbox = $("#lightbox");
+  const lbImg = $("#lightbox-img");
+  const lbCaption = $("#lightbox-caption");
+  let currentSet = [];
+  let currentIndex = 0;
+
+  function bgUrl(el) {
+    const m = /url\((['"]?)(.*?)\1\)/.exec(getComputedStyle(el).backgroundImage);
+    return m ? m[2] : "";
+  }
+
+  function show(index) {
+    if (!currentSet.length) return;
+    currentIndex = (index + currentSet.length) % currentSet.length;
+    const item = currentSet[currentIndex];
+    lbImg.src = item.src;
+    lbImg.alt = item.caption;
+    lbCaption.textContent = item.caption;
+  }
+
+  function open(tile) {
+    const gallery = tile.closest(".gallery");
+    const tiles = [...gallery.querySelectorAll(".tile.ph")];
+    currentSet = tiles.map((t) => ({
+      src: bgUrl(t),
+      caption: t.querySelector("figcaption")?.textContent || "",
+    }));
+    show(tiles.indexOf(tile));
+    lightbox.hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
+  function close() {
+    lightbox.hidden = true;
+    lbImg.src = "";
+    document.body.style.overflow = "";
+  }
+
+  document.querySelectorAll(".gallery .tile.ph").forEach((tile) => {
+    tile.addEventListener("click", () => open(tile));
+  });
+
+  $("#lightbox-close").addEventListener("click", close);
+  $("#lightbox-prev").addEventListener("click", () => show(currentIndex - 1));
+  $("#lightbox-next").addEventListener("click", () => show(currentIndex + 1));
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) close();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (lightbox.hidden) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") show(currentIndex - 1);
+    if (e.key === "ArrowRight") show(currentIndex + 1);
+  });
+})();
