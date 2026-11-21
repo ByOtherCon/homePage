@@ -86,6 +86,13 @@ p { margin: 0 0 18px; }
 .ph-champs-buildout { background-image: url("images/project-champs-buildout.webp"); }
 .ph-champs-finish { background-image: url("images/project-champs-finish.webp"); }
 .ph-restroom { background-image: url("images/project-restroom-finish.webp"); }
+.ph-framing2 { background-image: url("images/current/framing-in-progress-1.jpg"); }
+.ph-commercial-buildout { background-image: url("images/current/commercial-framing-buildout.jpg"); }
+.ph-demo { background-image: url("images/current/demolition-in-progress.jpg"); }
+.ph-finished-retail { background-image: url("images/current/finished-retail-interior.jpg"); }
+.ph-finished-tile { background-image: url("images/current/finished-tile-flooring.jpg"); }
+.ph-shelving { background-image: url("images/current/retail-shelving-buildout.jpg"); }
+.ph-millwork { background-image: url("images/current/custom-millwork-in-progress.jpg"); }
 .tile.tile-soon { display: flex; align-items: center; justify-content: center; background: var(--bg); border: 1px dashed #b7bcc4; }
 .tile.tile-soon figcaption { position: static; width: 100%; color: var(--text); background: none; padding: 18px; text-align: center; }
 
