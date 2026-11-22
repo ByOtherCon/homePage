@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://byother-construction.onrender.com/sitemap.xml
+Sitemap: https://byotherconstruction.net/sitemap.xml
