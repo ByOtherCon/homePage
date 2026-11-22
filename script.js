@@ -58,8 +58,16 @@ const BUSINESS = {
   // Put image files in images/current/ and list them here:
   //   { src: "images/current/day1-framing.jpg", caption: "Framing — day 1" },
   currentProject: {
-    note: "We'll post photos here as the current job progresses — from framing to finished space.",
-    photos: [],
+    note: "Fresh from the job site. Updated as the project moves along.",
+    photos: [
+      { src: "images/current/framed-doorway-opening.jpg", caption: "New framing — doorway to courtyard" },
+      { src: "images/current/framing-in-progress-crew.jpg", caption: "Framing in progress" },
+      { src: "images/current/self-leveling-floor-pour.jpg", caption: "Self-leveling floor pour" },
+      { src: "images/current/concrete-leveling-crew.jpg", caption: "Floor prep crew at work" },
+      { src: "images/current/coated-floor-ceiling-demo.jpg", caption: "Floor finished, ceiling demo underway" },
+      { src: "images/current/warehouse-epoxy-floor.jpg", caption: "Warehouse floor coating — nearly complete" },
+      { src: "images/current/fresh-floor-coating-sheen.jpg", caption: "Fresh floor coating — finished" },
+    ],
   },
 };
 
@@ -157,7 +165,7 @@ function renderCurrentProject() {
   }
   cp.photos.forEach((p) => {
     const fig = document.createElement("figure");
-    fig.className = "tile";
+    fig.className = "tile ph";
     fig.style.backgroundImage = `url("${p.src}")`;
     fig.style.backgroundSize = "cover";
     fig.style.backgroundPosition = "center";
