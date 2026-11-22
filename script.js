@@ -3,6 +3,63 @@
 // ---------------------------------------------------------------------------
 const TRADES = ["Demolition", "Framing", "Carpentry", "Painting", "Drywall", "Plumbing", "Concrete"];
 
+// Per-project photo galleries. Clicking a Recent Work tile with a matching
+// data-project attribute opens that project's full set in the lightbox,
+// instead of just cycling the tiles around it.
+const PROJECT_GALLERIES = {
+  "adidas-orlando": [
+    { src: "images/projects/adidas-orlando/sales-floor-framing-wide.jpg", caption: "Open sales floor mid buildout" },
+    { src: "images/projects/adidas-orlando/checkout-counter-rough-in.jpg", caption: "Checkout counter rough-in" },
+    { src: "images/projects/adidas-orlando/aisle-shelving-wide.jpg", caption: "New shelving, aisle view" },
+    { src: "images/projects/adidas-orlando/aisle-shelving-symmetric.jpg", caption: "Shelving corridor" },
+    { src: "images/projects/adidas-orlando/shoe-wall-gondola-wrapped.jpg", caption: "Shoe wall fixtures, freshly installed" },
+    { src: "images/projects/adidas-orlando/wall-display-slatwall.jpg", caption: "Wall display shelving" },
+    { src: "images/projects/adidas-orlando/tile-floor-detail.jpg", caption: "Finished floor tile detail" },
+    { src: "images/projects/adidas-orlando/shelving-closeup-detail.jpg", caption: "Shelving hardware detail" },
+  ],
+  "taco-bell-boca": [
+    { src: "images/projects/boca/self-order-kiosk-station.jpg", caption: "Self-order kiosk station, finished" },
+    { src: "images/projects/boca/kiosk-condiment-station.jpg", caption: "Condiment station, finished" },
+    { src: "images/projects/boca/dining-area-wide.jpg", caption: "Dining area, finished" },
+    { src: "images/projects/boca/dining-area-booth-seating.jpg", caption: "Dining area seating" },
+    { src: "images/projects/boca/restroom-finish-detail.jpg", caption: "Restroom finish detail" },
+    { src: "images/projects/boca/beverage-fountain-station.jpg", caption: "Beverage station, finished" },
+    { src: "images/projects/boca/restroom-door-signage.jpg", caption: "Restroom, finished" },
+  ],
+  "day-spa-davenport": [
+    { src: "images/projects/day-spa-davenport/subfloor-framing-layout.jpg", caption: "Subfloor and framing layout" },
+    { src: "images/projects/day-spa-davenport/tile-install-in-progress.jpg", caption: "Tile installation in progress" },
+    { src: "images/projects/day-spa-davenport/room-prep-materials.jpg", caption: "Room prep" },
+    { src: "images/projects/day-spa-davenport/reception-desk-finished.jpg", caption: "Reception desk, finished" },
+    { src: "images/projects/day-spa-davenport/gallery-wall-finished.jpg", caption: "Finished accent wall" },
+    { src: "images/projects/day-spa-davenport/bathroom-vanity-finished.jpg", caption: "Finished bathroom" },
+    { src: "images/projects/day-spa-davenport/hallway-exit-finished.jpg", caption: "Finished hallway" },
+    { src: "images/projects/day-spa-davenport/wall-base-trim-detail.jpg", caption: "Finished trim detail" },
+    { src: "images/projects/day-spa-davenport/treatment-room-finished.jpg", caption: "Finished treatment room" },
+  ],
+  "stemma-cafe-orlando": [
+    { src: "images/projects/stemma-cafe-orlando/shell-construction-entry.jpg", caption: "Shell stage — entry/patio" },
+    { src: "images/projects/stemma-cafe-orlando/metal-stud-framing.jpg", caption: "Interior framing" },
+    { src: "images/projects/stemma-cafe-orlando/counter-mechanical-install.jpg", caption: "Counter and exhaust install" },
+    { src: "images/projects/stemma-cafe-orlando/wood-slat-accent-wall.jpg", caption: "Wood slat accent wall" },
+    { src: "images/projects/stemma-cafe-orlando/mural-reception-area.jpg", caption: "Reception area mural" },
+    { src: "images/projects/stemma-cafe-orlando/circular-nook-feature.jpg", caption: "Signature seating nook" },
+    { src: "images/projects/stemma-cafe-orlando/pendant-light-detail.jpg", caption: "Pendant light detail" },
+    { src: "images/projects/stemma-cafe-orlando/neon-sign-detail.jpg", caption: "Neon signage detail" },
+  ],
+  "champs-shoe-store": [
+    { src: "images/projects/champs-shoe-store/gutted-shell-materials-staged.jpg", caption: "Gutted shell, materials staged" },
+    { src: "images/projects/champs-shoe-store/demo-debris-workers.jpg", caption: "Demolition in progress" },
+    { src: "images/projects/champs-shoe-store/column-repair-detail.jpg", caption: "Column repair detail" },
+    { src: "images/projects/champs-shoe-store/sales-floor-nearly-complete.jpg", caption: "Sales floor, nearly complete" },
+    { src: "images/projects/champs-shoe-store/custom-display-fixtures.jpg", caption: "Custom display fixtures" },
+    { src: "images/projects/champs-shoe-store/wood-slatwall-wall-finished.jpg", caption: "Slatwall, finished" },
+    { src: "images/projects/champs-shoe-store/slatwall-baseboard-detail.jpg", caption: "Slatwall detail" },
+    { src: "images/projects/champs-shoe-store/checkout-counter-branded.jpg", caption: "Checkout counter, near complete" },
+    { src: "images/projects/champs-shoe-store/slatwall-mirror-install.jpg", caption: "Mirror installation" },
+  ],
+};
+
 const BUSINESS = {
   name: "Byother Construction",
   phone: "(407) 434-1825",
@@ -551,13 +608,19 @@ chatForm.addEventListener("submit", (e) => {
   }
 
   function open(tile) {
-    const gallery = tile.closest(".gallery");
-    const tiles = [...gallery.querySelectorAll(".tile.ph")];
-    currentSet = tiles.map((t) => ({
-      src: bgUrl(t),
-      caption: t.querySelector("figcaption")?.textContent || "",
-    }));
-    show(tiles.indexOf(tile));
+    const projectSlug = tile.dataset.project;
+    if (projectSlug && PROJECT_GALLERIES[projectSlug]) {
+      currentSet = PROJECT_GALLERIES[projectSlug];
+      show(0);
+    } else {
+      const gallery = tile.closest(".gallery");
+      const tiles = [...gallery.querySelectorAll(".tile.ph")];
+      currentSet = tiles.map((t) => ({
+        src: bgUrl(t),
+        caption: t.querySelector("figcaption")?.textContent || "",
+      }));
+      show(tiles.indexOf(tile));
+    }
     lightbox.hidden = false;
     document.body.style.overflow = "hidden";
   }

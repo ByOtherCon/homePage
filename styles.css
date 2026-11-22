@@ -93,6 +93,9 @@ p { margin: 0 0 18px; }
 .ph-finished-tile { background-image: url("images/current/finished-tile-flooring.jpg"); }
 .ph-shelving { background-image: url("images/current/retail-shelving-buildout.jpg"); }
 .ph-millwork { background-image: url("images/current/custom-millwork-in-progress.jpg"); }
+.ph-tacobell-boca { background-image: url("images/projects/boca/self-order-kiosk-station.jpg"); }
+.ph-day-spa { background-image: url("images/projects/day-spa-davenport/treatment-room-finished.jpg"); }
+.ph-stemma-cafe { background-image: url("images/projects/stemma-cafe-orlando/circular-nook-feature.jpg"); }
 .tile.tile-soon { display: flex; align-items: center; justify-content: center; background: var(--bg); border: 1px dashed #b7bcc4; }
 .tile.tile-soon figcaption { position: static; width: 100%; color: var(--text); background: none; padding: 18px; text-align: center; }
 .tile.ph { cursor: zoom-in; }
