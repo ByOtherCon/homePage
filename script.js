@@ -372,6 +372,36 @@ const FALLBACK =
   "I'm not sure about that one. For anything I can't answer, call " + BUSINESS.phone +
   " or leave a message through the contact form and we'll get back to you.";
 
+// --- Automatic chat log email (EmailJS) --------------------------------------
+// Sends a copy of the conversation to BUSINESS.email without the visitor
+// having to do anything (the "email this chat" button below is a manual,
+// visitor-triggered alternative that still works independently).
+const EMAILJS_SERVICE_ID = "service_uh6kmzb";
+const EMAILJS_TEMPLATE_ID = "template_hhyesvh";
+const EMAILJS_PUBLIC_KEY = "67EDhu6Xo5Hvj5Mu5";
+if (window.emailjs) emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+let logSent = false;
+let idleLogTimer = null;
+
+function sendChatLog() {
+  if (typeof emailjs === "undefined" || !transcript.length || logSent) return;
+  logSent = true;
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    visitor_name: (flow.answers && flow.answers.name) || "Website visitor",
+    chat_transcript: transcript.join("\n"),
+    page_url: window.location.href,
+    sent_at: new Date().toLocaleString(),
+  }).catch((err) => console.error("Chat log email failed:", err));
+}
+
+function scheduleIdleLog() {
+  clearTimeout(idleLogTimer);
+  idleLogTimer = setTimeout(() => {
+    if (transcript.some((line) => line.startsWith("Visitor: "))) sendChatLog();
+  }, 60000);
+}
+
 const chat = $("#chat");
 const chatLog = $("#chat-log");
 const chatChips = $("#chat-chips");
@@ -382,6 +412,7 @@ const transcript = [];
 
 function addMsg(text, who, link) {
   transcript.push((who === "user" ? "Visitor: " : "Bot: ") + text);
+  if (!flow.active) scheduleIdleLog();
   const el = document.createElement("div");
   el.className = "msg " + who;
   el.textContent = text;
@@ -572,6 +603,7 @@ function finishFlow() {
     { label: "Start a new application", onClick: () => startApplyFlow() },
     { label: "Done, thanks", onClick: () => renderDefaultChips() },
   ]);
+  sendChatLog();
 }
 
 // --- Default chat input routing ----------------------------------------------
